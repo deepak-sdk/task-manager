@@ -66,7 +66,7 @@ function App() {
   return (
     <div className="App">
       <h2>Task Manager</h2>
-      <form onSubmit={handleSubmit}>
+      <form onSubmit={handleSubmit} className="app-form">
         <input
           type="text"
           onChange={(e) => setTask(e.target.value)}
@@ -76,23 +76,25 @@ function App() {
         {task ? <button type="submit">Add Task</button> : ''}
       </form>
       {tasks.map((task) => (
-        <div key={task.id}>
+        <div key={task.id} className="tasks-list">
+          <input
+            type="checkbox"
+            onChange={() => toggleComplete(task.id)}
+            checked={task.completed}
+            className="task-checked"
+          />
           {taskEdit === task.id ? (
             <input
               type="text"
               onChange={(e) => setEditText(e.target.value)}
               value={editText}
+              placeholder="Edit Task"
             />
           ) : (
             <div>{task.text}</div>
           )}
 
           <button onClick={() => deleteTask(task.id)}>Delete</button>
-          <input
-            type="checkbox"
-            onChange={() => toggleComplete(task.id)}
-            checked={task.completed}
-          />
 
           {taskEdit === task.id ? (
             <button onClick={() => editTask(task.id)}>Submit Edit</button>
